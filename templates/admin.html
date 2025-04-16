@@ -744,7 +744,7 @@
         }
         
         // Запускаем проверку обновлений каждые 5 секунд
-        setInterval(checkForUpdates, 5000);
+        setInterval(checkForUpdates, 10000000);
         
         // Запускаем первую проверку сразу
         checkForUpdates();
@@ -896,7 +896,7 @@
         }
         
         // Запускаем периодическое обновление статуса каждые 30 секунд
-        setInterval(updateBackupStatus, 30000);
+        setInterval(updateBackupStatus, 30000000);
         
         // Инициализация визуального выделения текущей быстрой кнопки
         if (document.getElementById('backup_interval').value === 'custom') {
@@ -1011,7 +1011,7 @@
                         document.getElementById('lastBackupTime').textContent = formattedDate;
                         
                         // Обновляем статус после создания резервной копии
-                        setTimeout(updateBackupStatus, 1000);
+                        setTimeout(updateBackupStatus, 10000000);
                         
                         // Скрываем сообщение через 5 секунд
                         setTimeout(() => {
