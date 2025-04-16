@@ -708,15 +708,16 @@
             const lastUpdateDiv = document.createElement('div');
             lastUpdateDiv.className = 'alert alert-info mt-3';
             lastUpdateDiv.innerHTML = `
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h6 class="mb-0"><i class="fas fa-sync-alt me-2"></i>Система автообновления данных</h6>
-                    <button id="toggleAutoRefresh" class="btn btn-sm btn-outline-primary" title="Приостановить/возобновить автообновление">
-                        <i class="fas fa-pause"></i>
-                    </button>
-                </div>
-                <p class="mb-1"><strong>Источник данных:</strong> <span class="badge bg-success">Яндекс.Диск</span></p>
-                <p class="mb-1"><strong>Последнее обновление:</strong> <span id="last-data-update">загрузка...</span></p>
-                <p class="mb-0 small text-muted">Данные обновляются автоматически каждые 5 секунд. Нажмите кнопку паузы, чтобы приостановить автообновление при прокрутке.</p>
+                <div class="alert alert-info mt-3" style="color: black;">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h6 class="mb-0"><i class="fas fa-sync-alt me-2"></i>Система автообновления данных</h6>
+        <button id="toggleAutoRefresh" class="btn btn-sm btn-outline-primary" title="Приостановить/возобновить автообновление">
+            <i class="fas fa-pause"></i>
+        </button>
+    </div>
+    <p class="mb-1"><strong>Источник данных:</strong> <span class="badge bg-success">Яндекс.Диск</span></p>
+    <p class="mb-1"><strong>Последнее обновление:</strong> <span id="last-data-update"></span></p>
+    <p class="mb-0 small" style="color: black !important;">Данные обновляются автоматически каждые 5 секунд. Нажмите кнопку паузы, чтобы приостановить автообновление при прокрутке.</p>
             `;
             statsCard.appendChild(lastUpdateDiv);
             
