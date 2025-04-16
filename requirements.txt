@@ -1,0 +1,10 @@
+Flask
+Flask-WTF
+WTForms
+requests
+XlsxWriter
+gunicorn
+flask-caching
+brotli-asgi
+PyGithub
+schedule

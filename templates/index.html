@@ -1,0 +1,1020 @@
+{% extends 'base.html' %}
+
+{% block title %}Розыгрыш PORSCHE CAYENNE - Регистрация{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <!-- Информация о призе -->
+    <div class="col-lg-6">
+        <div class="prize-card p-3">
+            <div class="car-image-container position-relative mb-4">
+                <img src="{{ url_for('static', filename='images/porsche-cayenne.png') }}?v=1" alt="Porsche Cayenne" class="car-image w-100">
+            </div>
+
+            <h3 class="feature-heading mb-4"><i class="fas fa-info-circle me-2"></i>Для участия в розыгрыше необходимо:</h3>
+            <div class="car-specs mb-4">
+                <div class="row g-3">
+                    <div class="col-12 mb-3">
+                        <div class="spec-card d-flex border border-dark" style="overflow: hidden; max-width: 600px; margin: 0 auto;">
+                            <div class="number-badge bg-black text-white d-flex align-items-center justify-content-center" style="min-width: 80px; width: 80px; font-weight: bold; font-size: 2.5rem;">1</div>
+                            <div class="bg-white text-left flex-grow-1 d-flex flex-column justify-content-center p-3 py-4" style="min-height: 100px;">
+                                <h5 class="mb-1 text-dark" style="font-size: 1.5rem; font-weight: 700; line-height: 1.3;">Вступить в сообщество</h5>
+                                <p class="mb-0 text-dark" style="font-size: 1.3rem;">«PORSCHE от КАМИЛЯ»</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <div class="spec-card d-flex border border-dark" style="overflow: hidden; max-width: 600px; margin: 0 auto;">
+                            <div class="number-badge bg-black text-white d-flex align-items-center justify-content-center" style="min-width: 80px; width: 80px; font-weight: bold; font-size: 2.5rem;">2</div>
+                            <div class="bg-white text-left flex-grow-1 d-flex flex-column justify-content-center p-3 py-4" style="min-height: 100px;">
+                                <h5 class="mb-1 text-dark" style="font-size: 1.5rem; font-weight: 700; line-height: 1.3;">Добавить всего 30 спонсоров</h5>
+                                <p class="mb-0 text-dark" style="font-size: 1.3rem;">отправим в сообщество</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <div class="spec-card d-flex border border-dark" style="overflow: hidden; max-width: 600px; margin: 0 auto;">
+                            <div class="number-badge bg-black text-white d-flex align-items-center justify-content-center" style="min-width: 80px; width: 80px; font-weight: bold; font-size: 2.5rem;">3</div>
+                            <div class="bg-white text-left flex-grow-1 d-flex flex-column justify-content-center p-3 py-4" style="min-height: 100px;">
+                                <h5 class="mb-1 text-dark" style="font-size: 1.5rem; font-weight: 700; line-height: 1.3;">Выложить на статус видео с ссылкой</h5>
+                                <p class="mb-0 text-dark" style="font-size: 1.3rem;">отправим в сообщество</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="rules-heading"><i class="fas fa-gavel me-2"></i>Правила розыгрыша</h3>
+            <ul class="rules-list">
+                <li>Участвовать могут только жители Махачкалы (включая все районы, посёлки и сёла) и Каспийска</li>
+                <li>Возраст участников должен быть не менее 16 лет</li>
+                <li>Нельзя покидать сообщество до завершения розыгрыша</li>
+                <li>Победитель будет выбран случайным образом</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Форма регистрации -->
+    <div class="col-lg-6">
+        <div class="registration-card p-4">
+            <h2 class="text-center mb-4"><i class="fas fa-user-plus me-2 text-primary"></i>Регистрация участника</h2>
+            
+            <div id="location-status" style="display: none;"></div>
+            
+            <form id="registration-form" action="{{ url_for('register') }}" method="post" class="registration-form">
+                <input type="hidden" id="latitude" name="latitude" value="">
+                <input type="hidden" id="longitude" name="longitude" value="">
+                
+                <div class="form-group mb-3">
+                    <label for="full_name" class="form-label"><i class="fas fa-user me-2"></i>Фамилия и Имя:</label>
+                    <input type="text" class="form-control" id="full_name" name="full_name" required>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label for="phone" class="form-label"><i class="fas fa-phone-alt me-2"></i>Номер телефона:</label>
+                    <div class="text-danger fw-bold mb-2"><i class="fab fa-whatsapp me-2"></i>Номер должен быть зарегистрирован в WhatsApp</div>
+                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="+7 (999) 999-99-99" required>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label for="age" class="form-label"><i class="fas fa-birthday-cake me-2"></i>Возраст:</label>
+                    <input type="number" class="form-control" id="age" name="age" min="16" max="100" required>
+                </div>
+                
+                <div class="form-group mb-4">
+                    <label class="form-label d-block"><i class="fas fa-venus-mars me-2"></i>Пол:</label>
+                    <div class="gender-options d-flex">
+                        <div class="form-check form-check-inline me-4">
+                            <input class="form-check-input" type="radio" name="gender" id="male" value="male" required>
+                            <label class="form-check-label" for="male">Мужской</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+                            <label class="form-check-label" for="female">Женский</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group mb-4">
+                    <div class="location-verification">
+                        <p><i class="fas fa-map-marker-alt me-2"></i><strong>Подтверждение местоположения:</strong></p>
+                        <p class="mb-2">Для участия в розыгрыше необходимо подтвердить, что вы находитесь в Махачкале или Каспийске</p>
+                        <div class="d-flex justify-content-between mb-2">
+                            <button id="request-location" type="button" class="btn btn-primary flex-grow-1">
+                                <i class="fas fa-location-arrow me-2"></i>Подтвердить местоположение
+                            </button>
+                            <button id="toggle-test-mode" type="button" class="btn btn-sm btn-outline-secondary ms-2" style="display: none;">
+                                <i class="fas fa-code"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Строка с текущим городом -->
+                        <div id="user-city-display" class="d-none mt-3 mb-2 p-2 border rounded">
+                            <div class="d-flex align-items-center">
+                                <i id="city-icon" class="fas fa-map-marker-alt me-2" style="font-size: 1.2rem;"></i>
+                                <div>
+                                    <div class="fw-bold">Ваш город:</div>
+                                    <div id="user-city-name">Не определен</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="location-warning" class="alert alert-warning mt-2" style="display: block;">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Внимание! Вы не сможете участвовать в розыгрыше без подтверждения местоположения. Обязательно отключите VPN, если он у вас включён.
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" id="submit-registration" class="btn btn-register btn-lg w-100" disabled>
+                    <i class="fas fa-check-circle me-2"></i>Участвовать в розыгрыше
+                </button>
+            </form>
+            
+            <!-- Форма поиска своего номера участника -->
+            <div class="mt-4 mb-4">
+                <div class="p-4 bg-light rounded shadow-sm text-dark">
+                    <h4 class="text-center mb-3"><i class="fas fa-search me-2 text-primary"></i>Узнать свой номер участника</h4>
+                    <p class="text-center mb-3">Если вы уже зарегистрированы и забыли свой номер участника, вы можете найти его здесь</p>
+                    
+                    <form id="ticketSearch" class="mb-3">
+                        <div class="form-group mb-3">
+                            <label for="search_phone" class="form-label"><i class="fas fa-phone-alt me-2"></i>Введите свой номер телефона:</label>
+                            <input type="tel" class="form-control" id="search_phone" name="search_phone" placeholder="+7 (999) 999-99-99" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-ticket-alt me-2"></i>Найти мой номер
+                        </button>
+                    </form>
+                    
+                    <div id="ticketSearchResult" class="mt-3" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <!-- Ссылка на предыдущие розыгрыши -->
+            <div class="previous-contests mt-4">
+                <div class="p-3 bg-dark rounded text-center">
+                    <h3 class="mb-3"><i class="fab fa-vk text-primary me-2"></i>Прошлые розыгрыши</h3>
+                    <p>Посмотрите результаты прошлых розыгрышей и истории победителей в нашей группе ВКонтакте</p>
+                    <a href="https://vk.com/clips/playlist/788943776_1" target="_blank" class="btn btn-primary mt-2">
+                        <i class="fab fa-vk me-2"></i>Перейти в группу ВКонтакте
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно с отсчетом -->
+<div class="modal fade" id="redirectModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="redirectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header border-bottom border-primary">
+                <h5 class="modal-title" id="redirectModalLabel"><i class="fas fa-check-circle text-success me-2"></i>Регистрация успешна!</h5>
+            </div>
+            <div class="modal-body text-center p-4">
+                <div class="mb-4">
+                    <p>Спасибо за регистрацию в розыгрыше PORSCHE CAYENNE!</p>
+                    <div id="participant-number-container" class="my-4 p-4 rounded-lg text-center shadow-lg" style="display: none; background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                        <div class="position-relative">
+                            <div class="position-absolute" style="top: -30px; left: 50%; transform: translateX(-50%);">
+                                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill shadow" style="font-size: 1.1rem;">
+                                    <i class="fas fa-trophy me-2"></i>Поздравляем!
+                                </span>
+                            </div>
+                            <h4 class="text-white mt-3 mb-3 text-uppercase" style="font-weight: 800; letter-spacing: 1px;">
+                                <i class="fas fa-ticket-alt me-2"></i>Ваш номер для участия
+                            </h4>
+                            
+                            <div class="number-display mb-3 mx-auto d-flex align-items-center justify-content-center" 
+                                style="width: 140px; height: 140px; background: rgba(0,0,0,0.2); border-radius: 50%; box-shadow: 0 8px 20px rgba(0,0,0,0.3), inset 0 0 10px rgba(255,255,255,0.2); border: 5px solid #ffffff;">
+                                <span id="participant-number" class="display-3 fw-bolder text-white" style="text-shadow: 0 3px 6px rgba(0,0,0,0.5);">0</span>
+                            </div>
+                            
+                            <div class="mt-4 pt-3 pb-2 px-3 bg-white rounded-3 shadow-sm">
+                                <p class="mb-2 fw-bold text-dark">
+                                    <i class="fas fa-bell me-2 text-warning"></i>
+                                    Не пропустите результаты розыгрыша!
+                                </p>
+                                <p class="mb-3" style="color: #495057;">Подпишитесь на страницу ВКонтакте, чтобы узнать о прямом эфире и итогах розыгрыша</p>
+                                <a href="https://vk.com/kamil_vagidov" target="_blank" class="btn btn-primary px-4 py-2 mb-2" style="background-color: #4a76a8; border-color: #4a76a8;">
+                                    <i class="fab fa-vk me-2"></i>Перейти на страницу ВК
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-4 rounded-lg text-center shadow-lg mb-4" style="background: linear-gradient(135deg, #128C7E 0%, #075E54 100%);">
+                    <div class="position-relative">
+                        <div class="position-absolute" style="top: -30px; left: 50%; transform: translateX(-50%);">
+                            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill shadow" style="font-size: 1.1rem;">
+                                <i class="fas fa-check-circle me-2"></i>Последний шаг
+                            </span>
+                        </div>
+                        
+                        <h4 class="text-white mt-3 mb-3 text-uppercase" style="font-weight: 800; letter-spacing: 1px;">
+                            <i class="fab fa-whatsapp me-2"></i>Присоединитесь к сообществу
+                        </h4>
+                        
+                        <div class="bg-white p-3 rounded-3 mb-4 shadow-sm">
+                            <p class="mb-2 fw-bold" style="color: #075E54;">
+                                <i class="fas fa-info-circle me-2 text-primary"></i>
+                                Для завершения регистрации необходимо присоединиться к сообществу WhatsApp
+                            </p>
+                            <p class="text-danger fw-bold border border-danger rounded p-2 mt-2">
+                                <i class="fas fa-exclamation-triangle me-2"></i>Покинув сообщество вы автоматически исключаетесь с розыгрыша
+                            </p>
+                        </div>
+                        
+                        <div class="countdown-box mx-auto mb-3 d-flex align-items-center justify-content-center" 
+                            style="width: 120px; height: 120px; background: rgba(255,255,255,0.2); border-radius: 50%; box-shadow: 0 8px 20px rgba(0,0,0,0.3), inset 0 0 10px rgba(255,255,255,0.2); border: 5px solid #ffffff;">
+                            <span id="countdown" class="display-3 fw-bolder text-white" style="text-shadow: 0 3px 6px rgba(0,0,0,0.5);">15</span>
+                        </div>
+                        
+                        <p class="text-white mb-4">Переход в группу WhatsApp через <span id="countdown-text" class="fw-bold">15</span> секунд...</p>
+                        
+                        <button id="joinNowBtn" class="btn btn-light btn-lg px-4 py-2 fw-bold shadow-sm" style="color: #075E54;">
+                            <i class="fab fa-whatsapp me-2" style="font-size: 1.2rem;"></i>Присоединиться сейчас
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно с инструкциями по геолокации -->
+<div class="modal fade" id="locationHelpModal" tabindex="-1" aria-labelledby="locationHelpModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header border-bottom border-primary">
+                <h5 class="modal-title" id="locationHelpModalLabel"><i class="fas fa-map-marker-alt text-primary me-2"></i>Как разрешить доступ к местоположению</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-3">
+                    <i class="fas fa-info-circle text-primary" style="font-size: 3rem;"></i>
+                </div>
+                <p>Для участия в розыгрыше необходимо разрешить сайту доступ к вашему местоположению.</p>
+                <p>Когда вы нажмете кнопку "Разрешить определение местоположения", ваш браузер покажет запрос. Нажмите "Разрешить" или "Allow".</p>
+                
+                <div class="bg-dark p-3 rounded mt-3 mb-3 border border-light">
+                    <h6><i class="fas fa-lightbulb text-warning me-2"></i>Если запрос не появляется:</h6>
+                    <ul>
+                        <li>Проверьте настройки браузера и разрешите доступ к геолокации для нашего сайта</li>
+                        <li>В Chrome: нажмите на значок замка возле адреса сайта → Настройки сайта → Местоположение</li>
+                        <li>В Safari: Настройки → Конфиденциальность → Службы геолокации</li>
+                        <li>В Firefox: нажмите на значок замка возле адреса сайта → Разрешения → Местоположение</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" id="tryLocationAgain">Попробовать снова</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const locationStatus = document.getElementById('location-status');
+        const registrationForm = document.getElementById('registration-form');
+        const latitudeInput = document.getElementById('latitude');
+        const longitudeInput = document.getElementById('longitude');
+        const requestLocationBtn = document.getElementById('request-location');
+        const submitButton = document.getElementById('submit-registration');
+        
+        // Получаем ссылку на WhatsApp из переданных параметров или используем значение по умолчанию
+        const whatsappUrl = '{{ whatsapp_link }}' || 'https://chat.whatsapp.com/EIa4wkifsVQDttzjOKlOY3';
+        
+        // Флаг для отслеживания статуса проверки местоположения
+        let locationVerified = false;
+        
+        // Тестовый режим
+        let testMode = false;
+        
+        // Кнопка тестового режима
+        const toggleTestModeBtn = document.getElementById('toggle-test-mode');
+        
+        // Проверка URL для активации тестового режима (dev=1)
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('dev') === '1') {
+            toggleTestModeBtn.style.display = 'block';
+        }
+        
+        // Активация тестового режима по кнопке
+        toggleTestModeBtn.addEventListener('click', function() {
+            testMode = !testMode;
+            if (testMode) {
+                activateTestMode();
+                this.classList.remove('btn-outline-secondary');
+                this.classList.add('btn-success');
+            } else {
+                deactivateTestMode();
+                this.classList.remove('btn-success');
+                this.classList.add('btn-outline-secondary');
+            }
+        });
+        
+        // Активация тестового режима по нажатию Ctrl+Alt+T
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.altKey && e.key === 't') {
+                testMode = !testMode;
+                if (testMode) {
+                    // Активируем тестовый режим
+                    activateTestMode();
+                    toggleTestModeBtn.style.display = 'block';
+                    toggleTestModeBtn.classList.remove('btn-outline-secondary');
+                    toggleTestModeBtn.classList.add('btn-success');
+                    alert('Тестовый режим активирован! Местоположение считается подтвержденным.');
+                } else {
+                    // Деактивируем тестовый режим
+                    deactivateTestMode();
+                    toggleTestModeBtn.classList.remove('btn-success');
+                    toggleTestModeBtn.classList.add('btn-outline-secondary');
+                    alert('Тестовый режим отключен.');
+                }
+            }
+        });
+        
+        // Функция активации тестового режима
+        function activateTestMode() {
+            // Устанавливаем тестовые координаты Махачкалы
+            latitudeInput.value = '42.9849';
+            longitudeInput.value = '47.5048';
+            locationVerified = true;
+            
+            // Разблокируем кнопку отправки формы
+            submitButton.disabled = false;
+            
+            // Отображаем индикатор тестового режима
+            if (!document.getElementById('test-mode-indicator')) {
+                const testModeIndicator = document.createElement('div');
+                testModeIndicator.id = 'test-mode-indicator';
+                testModeIndicator.className = 'alert alert-info mt-3';
+                testModeIndicator.innerHTML = '<i class="fas fa-code me-2"></i>Тестовый режим активен - проверка местоположения отключена';
+                locationStatus.style.display = 'block';
+                locationStatus.appendChild(testModeIndicator);
+            }
+            
+            // Отображаем информацию о городе
+            const userCityDisplay = document.getElementById('user-city-display');
+            const userCityName = document.getElementById('user-city-name');
+            const cityIcon = document.getElementById('city-icon');
+            
+            if (userCityDisplay && userCityName) {
+                userCityDisplay.classList.remove('d-none');
+                userCityDisplay.classList.add('bg-info', 'text-white');
+                userCityName.textContent = 'Махачкала (тестовый режим)';
+                cityIcon.className = 'fas fa-code me-2 text-white';
+            }
+            
+            // Скрываем предупреждение
+            const locationWarning = document.getElementById('location-warning');
+            if (locationWarning) {
+                locationWarning.style.display = 'none';
+            }
+        }
+        
+        // Функция деактивации тестового режима
+        function deactivateTestMode() {
+            locationVerified = false;
+            submitButton.disabled = true;
+            
+            // Удаляем индикатор тестового режима
+            const testModeIndicator = document.getElementById('test-mode-indicator');
+            if (testModeIndicator) {
+                testModeIndicator.remove();
+            }
+            
+            // Скрываем информацию о городе
+            const userCityDisplay = document.getElementById('user-city-display');
+            if (userCityDisplay) {
+                userCityDisplay.classList.add('d-none');
+                userCityDisplay.classList.remove('bg-info', 'text-white');
+            }
+            
+            // Показываем предупреждение
+            const locationWarning = document.getElementById('location-warning');
+            if (locationWarning) {
+                locationWarning.style.display = 'block';
+            }
+        }
+        
+        // Функция запроса геолокации
+        function requestLocation() {
+            if (navigator.geolocation) {
+                // Показываем информационное сообщение
+                locationStatus.style.display = 'block';
+                locationStatus.innerHTML = `
+                    <div class="alert bg-primary text-white p-3 rounded mb-3">
+                        <h5><i class="fas fa-map-marker-alt me-2"></i>Проверка местоположения</h5>
+                        <p class="mb-1">Сейчас браузер запросит разрешение на определение местоположения.</p>
+                        <p class="mb-1">Пожалуйста, нажмите «Разрешить» или «Allow» в появившемся окне.</p>
+                        <div class="spinner-border text-light mt-2" role="status">
+                            <span class="visually-hidden">Загрузка...</span>
+                        </div>
+                    </div>
+                `;
+                
+                // Добавляем небольшую задержку, чтобы пользователь успел прочитать сообщение
+                setTimeout(() => {
+                    navigator.geolocation.getCurrentPosition(
+                        // Успешное получение координат
+                        function(position) {
+                            // Очищаем таймер, чтобы не показывать модальное окно с инструкциями
+                            if (window.locationModalTimeout) {
+                                clearTimeout(window.locationModalTimeout);
+                                window.locationModalTimeout = null;
+                            }
+                            
+                            const latitude = position.coords.latitude;
+                            const longitude = position.coords.longitude;
+                            
+                            // Показываем сообщение об успешном определении местоположения
+                            locationStatus.innerHTML = `
+                                <div class="bg-info text-white p-3 rounded mb-3">
+                                    <p class="mb-0"><i class="fas fa-spinner fa-spin me-2"></i>Местоположение успешно определено. Проверяем возможность участия...</p>
+                                </div>
+                            `;
+                            
+                            // Сохраняем координаты в скрытых полях формы
+                            latitudeInput.value = latitude;
+                            longitudeInput.value = longitude;
+                            
+                            // Отправляем координаты на сервер для проверки
+                            fetch(`/check-coordinates?lat=${latitude}&lng=${longitude}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.status === 'success') {
+                                        if (data.allowed) {
+                                            locationStatus.classList.remove('alert-warning');
+                                            locationStatus.classList.add('alert-success');
+                                            locationStatus.innerHTML = `<p>Ваше местоположение (${data.city}) подтверждено. Вы можете участвовать в розыгрыше!</p>`;
+                                            registrationForm.style.display = 'block';
+                                            submitButton.disabled = false;
+                                            locationVerified = true;
+                                            
+                                            // Скрываем предупреждение о местоположении
+                                            const locationWarning = document.getElementById('location-warning');
+                                            if (locationWarning) {
+                                                locationWarning.style.display = 'none';
+                                            }
+                                            
+                                            // Отображаем информацию о городе пользователя
+                                            const userCityDisplay = document.getElementById('user-city-display');
+                                            const userCityName = document.getElementById('user-city-name');
+                                            const cityIcon = document.getElementById('city-icon');
+                                            
+                                            if (userCityDisplay && userCityName) {
+                                                userCityDisplay.classList.remove('d-none');
+                                                userCityDisplay.classList.add('bg-success', 'text-white');
+                                                userCityName.textContent = data.city;
+                                                cityIcon.className = 'fas fa-check-circle me-2 text-white';
+                                            }
+                                        } else {
+                                            locationStatus.classList.remove('alert-warning');
+                                            locationStatus.classList.add('alert-danger');
+                                            locationStatus.classList.add('location-restricted');
+                                            locationStatus.innerHTML = `<p><i class="fas fa-exclamation-triangle me-2"></i>К сожалению, розыгрыш доступен ТОЛЬКО для жителей Махачкалы (включая все районы, посёлки и сёла) и Каспийска.<br>Ваше текущее местоположение: ${data.city}.</p>`;
+                                            
+                                            // Отображаем информацию о городе пользователя (запрещенный город)
+                                            const userCityDisplay = document.getElementById('user-city-display');
+                                            const userCityName = document.getElementById('user-city-name');
+                                            const cityIcon = document.getElementById('city-icon');
+                                            
+                                            if (userCityDisplay && userCityName) {
+                                                userCityDisplay.classList.remove('d-none');
+                                                userCityDisplay.classList.add('bg-danger', 'text-white');
+                                                userCityName.textContent = data.city + ' (участие запрещено)';
+                                                cityIcon.className = 'fas fa-ban me-2 text-white';
+                                            }
+                                        }
+                                    } else {
+                                        // Если не удалось определить город по координатам, пробуем по IP
+                                        checkLocationByIP();
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Ошибка:', error);
+                                    // В случае ошибки пробуем определить местоположение по IP
+                                    checkLocationByIP();
+                                });
+                        },
+                        // Ошибка получения координат
+                        function(error) {
+                            console.error('Ошибка геолокации:', error);
+                            
+                            // Очищаем таймер, чтобы не показывать модальное окно с инструкциями,
+                            // так как сейчас покажем встроенное сообщение об ошибке
+                            if (window.locationModalTimeout) {
+                                clearTimeout(window.locationModalTimeout);
+                                window.locationModalTimeout = null;
+                            }
+                            
+                            let errorMessage = 'Не удалось получить доступ к вашему местоположению.';
+                            
+                            switch(error.code) {
+                                case error.PERMISSION_DENIED:
+                                    errorMessage = 'Вы отклонили запрос на определение местоположения. Пожалуйста, разрешите доступ и попробуйте снова.';
+                                    locationStatus.innerHTML = `
+                                        <div class="alert alert-danger">
+                                            <p class="mb-2"><i class="fas fa-exclamation-triangle me-2"></i>${errorMessage}</p>
+                                            <p class="mb-2">Для участия в розыгрыше необходимо предоставить доступ к вашему местоположению.</p>
+                                            <button id="retry-location" class="btn btn-danger mt-2">Попробовать снова</button>
+                                            <button id="show-help" class="btn btn-link text-white mt-2">Показать инструкцию</button>
+                                        </div>
+                                    `;
+                                    document.getElementById('retry-location').addEventListener('click', requestLocation);
+                                    document.getElementById('show-help').addEventListener('click', function() {
+                                        locationHelpModal.show();
+                                    });
+                                    break;
+                                default:
+                                    locationStatus.innerHTML = `<p>${errorMessage} Проверяем по IP-адресу...</p>`;
+                                    // Пробуем определить местоположение по IP
+                                    checkLocationByIP();
+                            }
+                        },
+                        // Опции геолокации
+                        {
+                            enableHighAccuracy: true,
+                            timeout: 5000,
+                            maximumAge: 0
+                        }
+                    );
+                }, 1000);
+            } else {
+                // Если браузер не поддерживает геолокацию
+                locationStatus.innerHTML = '<p>Ваш браузер не поддерживает геолокацию. Проверяем местоположение по IP-адресу...</p>';
+                checkLocationByIP();
+            }
+        }
+        
+        // Создаем модальное окно для инструкций по геолокации
+        const locationHelpModal = new bootstrap.Modal(document.getElementById('locationHelpModal'));
+        
+        // Обработчик нажатия на кнопку запроса местоположения
+        requestLocationBtn.addEventListener('click', function() {
+            // Показываем модальное окно через 5 секунд, если пользователь не дал разрешение
+            const locationTimeout = setTimeout(() => {
+                locationHelpModal.show();
+            }, 5000);
+            
+            // Сохраняем timeout в глобальной переменной, чтобы можно было отменить его
+            window.locationModalTimeout = locationTimeout;
+            
+            // Запускаем запрос геолокации
+            requestLocation();
+        });
+        
+        // Обработчик для кнопки "Попробовать снова" в модальном окне
+        document.getElementById('tryLocationAgain').addEventListener('click', function() {
+            locationHelpModal.hide();
+            requestLocation();
+        });
+        
+        // Функция проверки местоположения по IP-адресу
+        function checkLocationByIP() {
+            fetch('/check-location')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        if (data.allowed) {
+                            locationStatus.innerHTML = `<p>Ваше местоположение (${data.city}) подтверждено по IP-адресу. Вы можете участвовать в розыгрыше!</p>`;
+                            registrationForm.style.display = 'block';
+                            submitButton.disabled = false;
+                            locationVerified = true;
+                            
+                            // Скрываем предупреждение о местоположении
+                            const locationWarning = document.getElementById('location-warning');
+                            if (locationWarning) {
+                                locationWarning.style.display = 'none';
+                            }
+                            
+                            // Отображаем информацию о городе пользователя
+                            const userCityDisplay = document.getElementById('user-city-display');
+                            const userCityName = document.getElementById('user-city-name');
+                            const cityIcon = document.getElementById('city-icon');
+                            
+                            if (userCityDisplay && userCityName) {
+                                userCityDisplay.classList.remove('d-none');
+                                userCityDisplay.classList.add('bg-success', 'text-white');
+                                userCityName.textContent = data.city;
+                                cityIcon.className = 'fas fa-check-circle me-2 text-white';
+                            }
+                        } else {
+                            locationStatus.classList.remove('alert-warning');
+                            locationStatus.classList.add('alert-danger');
+                            locationStatus.classList.add('location-restricted');
+                            locationStatus.innerHTML = `<p><i class="fas fa-exclamation-triangle me-2"></i>К сожалению, розыгрыш доступен ТОЛЬКО для жителей Махачкалы (включая все районы, посёлки и сёла) и Каспийска.<br>Ваше текущее местоположение: ${data.city}.</p>`;
+                            
+                            // Отображаем информацию о городе пользователя (запрещенный город)
+                            const userCityDisplay = document.getElementById('user-city-display');
+                            const userCityName = document.getElementById('user-city-name');
+                            const cityIcon = document.getElementById('city-icon');
+                            
+                            if (userCityDisplay && userCityName) {
+                                userCityDisplay.classList.remove('d-none');
+                                userCityDisplay.classList.add('bg-danger', 'text-white');
+                                userCityName.textContent = data.city + ' (участие запрещено)';
+                                cityIcon.className = 'fas fa-ban me-2 text-white';
+                            }
+                        }
+                    } else {
+                        locationStatus.classList.remove('alert-warning');
+                        locationStatus.classList.add('alert-danger');
+                        locationStatus.classList.add('location-restricted');
+                        locationStatus.innerHTML = `<p><i class="fas fa-exclamation-triangle me-2"></i>К сожалению, не удалось проверить ваше местоположение. Розыгрыш доступен только для жителей Махачкалы и Каспийска.</p>
+                        <button id="retry-location-error" class="btn btn-primary mt-2">Попробовать снова</button>`;
+                        
+                        document.getElementById('retry-location-error').addEventListener('click', requestLocation);
+                    }
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    locationStatus.classList.remove('alert-warning');
+                    locationStatus.classList.add('alert-danger');
+                    locationStatus.classList.add('location-restricted');
+                    locationStatus.innerHTML = `<p><i class="fas fa-exclamation-triangle me-2"></i>К сожалению, не удалось проверить ваше местоположение. Розыгрыш доступен только для жителей Махачкалы и Каспийска.</p>
+                    <button id="retry-location-error" class="btn btn-primary mt-2">Попробовать снова</button>`;
+                    
+                    document.getElementById('retry-location-error').addEventListener('click', requestLocation);
+                });
+        }
+        
+        // Валидация формы телефона
+        const phoneInput = document.getElementById('phone');
+        
+        // Функция проверки полноты номера телефона
+        function isPhoneComplete(phone) {
+            // Нам нужно 11 цифр для полного российского номера (включая код страны)
+            return phone.replace(/\D/g, '').length >= 11;
+        }
+        
+        // Функция для проверки и обновления состояния кнопки отправки
+        function validatePhone() {
+            const phoneValue = phoneInput.value.trim();
+            const isComplete = isPhoneComplete(phoneValue);
+            
+            // Показываем или скрываем сообщение о неполном номере
+            let phoneErrorDiv = document.getElementById('phone-incomplete-error');
+            
+            if (!isComplete) {
+                if (!phoneErrorDiv) {
+                    phoneErrorDiv = document.createElement('div');
+                    phoneErrorDiv.id = 'phone-incomplete-error';
+                    phoneErrorDiv.className = 'alert alert-warning mt-2';
+                    phoneErrorDiv.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i>Введите полный номер телефона в формате +7 (XXX) XXX-XX-XX';
+                    phoneInput.parentNode.appendChild(phoneErrorDiv);
+                }
+                // Отключаем кнопку отправки, если номер неполный
+                submitButton.disabled = true;
+            } else {
+                // Если номер полный, убираем сообщение об ошибке
+                if (phoneErrorDiv) {
+                    phoneErrorDiv.remove();
+                }
+                // Активируем кнопку отправки, если местоположение подтверждено
+                submitButton.disabled = !locationVerified;
+            }
+            
+            return isComplete;
+        }
+        
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                if (value[0] === '7') {
+                    value = '+7' + value.substring(1);
+                } else if (value[0] === '8') {
+                    value = '+7' + value.substring(1);
+                } else {
+                    value = '+7' + value;
+                }
+                
+                if (value.length > 2) {
+                    value = value.substring(0, 2) + ' (' + value.substring(2);
+                }
+                if (value.length > 7) {
+                    value = value.substring(0, 7) + ') ' + value.substring(7);
+                }
+                if (value.length > 12) {
+                    value = value.substring(0, 12) + '-' + value.substring(12);
+                }
+                if (value.length > 15) {
+                    value = value.substring(0, 15) + '-' + value.substring(15);
+                }
+            }
+            e.target.value = value.substring(0, 18);
+            
+            // Проверяем полноту номера при каждом изменении
+            validatePhone();
+        });
+
+        // Новый код для модального окна с перенаправлением
+        const redirectModal = new bootstrap.Modal(document.getElementById('redirectModal'), {
+            backdrop: 'static',
+            keyboard: false
+        });
+        
+        // Функция для проверки существующего номера телефона
+        function checkExistingPhone(phone) {
+            return fetch('/check-phone?phone=' + encodeURIComponent(phone), {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .catch(() => ({ exists: false })); // Возвращаем объект если запрос не прошел
+        }
+        
+        // Проверка телефона при потере фокуса
+        phoneInput.addEventListener('blur', function() {
+            const phoneValue = this.value.trim();
+            
+            // Сначала проверяем полноту номера
+            const isComplete = validatePhone();
+            
+            // Проверяем существование номера только если он полный
+            if (isComplete) {
+                checkExistingPhone(phoneValue)
+                    .then(data => {
+                        if (data.exists) {
+                            // Если номер телефона уже зарегистрирован, показываем ошибку
+                            const existingErrorDiv = document.getElementById('phone-error');
+                            if (!existingErrorDiv) {
+                                const newErrorDiv = document.createElement('div');
+                                newErrorDiv.id = 'phone-error';
+                                newErrorDiv.className = 'alert alert-danger mt-2';
+                                newErrorDiv.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i>' + data.message;
+                                phoneInput.parentNode.appendChild(newErrorDiv);
+                                submitButton.disabled = true;
+                            }
+                            return; // Прерываем выполнение
+                        } else {
+                            // Если номер не зарегистрирован, удаляем ошибку если она есть
+                            const existingErrorDiv = document.getElementById('phone-error');
+                            if (existingErrorDiv) {
+                                existingErrorDiv.remove();
+                                // Активируем кнопку отправки только если местоположение подтверждено и номер полный
+                                submitButton.disabled = !locationVerified;
+                            }
+                        }
+                    });
+            }
+        });
+        
+        // Перехватываем отправку формы
+        if (registrationForm) {
+            registrationForm.addEventListener('submit', function(event) {
+                // Предотвращаем стандартную отправку формы
+                event.preventDefault();
+                
+                // Проверяем полноту номера телефона
+                const phoneValue = phoneInput.value.trim();
+                if (!isPhoneComplete(phoneValue)) {
+                    // Если номер неполный, показываем сообщение и не отправляем форму
+                    validatePhone();
+                    return;
+                }
+                
+                // Сначала проверяем, не зарегистрирован ли уже этот номер
+                checkExistingPhone(phoneValue)
+                    .then(data => {
+                        if (data.exists) {
+                            // Если телефон уже зарегистрирован, показываем ошибку
+                            const errorDiv = document.getElementById('phone-error');
+                            if (!errorDiv) {
+                                const newErrorDiv = document.createElement('div');
+                                newErrorDiv.id = 'phone-error';
+                                newErrorDiv.className = 'alert alert-danger mt-2';
+                                newErrorDiv.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i>' + data.message;
+                                phoneInput.parentNode.appendChild(newErrorDiv);
+                                submitButton.disabled = true;
+                            }
+                            return; // Прерываем выполнение
+                        }
+                        
+                        // Если номер не зарегистрирован, отправляем форму
+                        const form = event.target;
+                        const formAction = form.getAttribute('action');
+                        const formMethod = form.getAttribute('method');
+                        const formData = new FormData(form);
+                        
+                        fetch(formAction, {
+                            method: formMethod,
+                            body: formData,
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        }).then(response => response.json())
+                        .then(data => {
+                            // Если регистрация успешна, показываем номер участника
+                            if (data.success && data.ticket_number) {
+                                // Добавляем информацию о номере участника в модальное окно
+                                document.getElementById('participant-number').textContent = data.ticket_number;
+                                document.getElementById('participant-number-container').style.display = 'block';
+                            }
+                            
+                            // Показываем модальное окно после успешной отправки
+                            redirectModal.show();
+                            
+                            // Запускаем таймер отсчета для перехода в WhatsApp
+                            let redirectCountdown = 15;
+                            let countdownInterval;
+                            
+                            function updateCountdown() {
+                                document.getElementById('countdown').textContent = redirectCountdown;
+                                document.getElementById('countdown-text').textContent = redirectCountdown;
+                                
+                                if (redirectCountdown <= 0) {
+                                    clearInterval(countdownInterval);
+                                    window.location.href = whatsappUrl;
+                                }
+                                
+                                redirectCountdown--;
+                            }
+                            
+                            // Запускаем интервал
+                            countdownInterval = setInterval(updateCountdown, 1000);
+                            
+                            // Кнопка для немедленного перехода
+                            document.getElementById('joinNowBtn').addEventListener('click', function() {
+                                clearInterval(countdownInterval);
+                                window.location.href = whatsappUrl;
+                            });
+                        }).catch(error => {
+                            console.error('Ошибка при отправке формы:', error);
+                        });
+                    });
+            });
+        }
+
+        // Обработка формы поиска номера участника
+        const findTicketForm = document.getElementById('ticketSearch');
+        const ticketSearchResult = document.getElementById('ticketSearchResult');
+        const searchPhoneInput = document.getElementById('search_phone');
+        
+        // Функция проверки полноты номера телефона для поиска
+        function isSearchPhoneComplete(phone) {
+            // Нам нужно 11 цифр для полного российского номера (включая код страны)
+            return phone.replace(/\D/g, '').length >= 11;
+        }
+        
+        // Функция валидации телефона для поиска
+        function validateSearchPhone() {
+            const phoneValue = searchPhoneInput.value.trim();
+            const isComplete = isSearchPhoneComplete(phoneValue);
+            
+            // Показываем или скрываем сообщение о неполном номере
+            let searchPhoneErrorDiv = document.getElementById('search-phone-error');
+            
+            if (phoneValue && !isComplete) {
+                if (!searchPhoneErrorDiv) {
+                    searchPhoneErrorDiv = document.createElement('div');
+                    searchPhoneErrorDiv.id = 'search-phone-error';
+                    searchPhoneErrorDiv.className = 'alert alert-warning mt-2';
+                    searchPhoneErrorDiv.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i>Введите полный номер телефона в формате +7 (XXX) XXX-XX-XX';
+                    searchPhoneInput.parentNode.appendChild(searchPhoneErrorDiv);
+                }
+                // Отключаем кнопку отправки, если номер неполный
+                document.querySelector('#ticketSearch button[type="submit"]').disabled = true;
+            } else {
+                // Если номер полный или поле пустое, убираем сообщение об ошибке
+                if (searchPhoneErrorDiv) {
+                    searchPhoneErrorDiv.remove();
+                }
+                // Активируем кнопку отправки
+                document.querySelector('#ticketSearch button[type="submit"]').disabled = false;
+            }
+            
+            return isComplete;
+        }
+        
+        // Обработчик ввода для поля поиска телефона
+        searchPhoneInput.addEventListener('input', function(e) {
+            // Получаем ввод пользователя
+            let inputVal = e.target.value.replace(/\D/g, '');
+            
+            // Ограничиваем длину до 11 цифр
+            if (inputVal.length > 11) {
+                inputVal = inputVal.substring(0, 11);
+            }
+            
+            // Проверяем первую цифру и преобразуем 8 в +7
+            if (inputVal.length > 0) {
+                if (inputVal[0] === '8') {
+                    inputVal = '7' + inputVal.substring(1);
+                }
+                
+                // Форматируем номер телефона
+                let formattedInput = '+' + inputVal.substring(0, 1);
+                
+                if (inputVal.length > 1) {
+                    formattedInput += ' (' + inputVal.substring(1, 4);
+                }
+                if (inputVal.length > 4) {
+                    formattedInput += ') ' + inputVal.substring(4, 7);
+                }
+                if (inputVal.length > 7) {
+                    formattedInput += '-' + inputVal.substring(7, 9);
+                }
+                if (inputVal.length > 9) {
+                    formattedInput += '-' + inputVal.substring(9, 11);
+                }
+                
+                // Устанавливаем отформатированное значение
+                e.target.value = formattedInput;
+            }
+            
+            // После форматирования проверяем валидность
+            validateSearchPhone();
+        });
+        
+        if (findTicketForm) {
+            findTicketForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const phone = searchPhoneInput.value.replace(/\D/g, '');
+                
+                if (!phone || !isSearchPhoneComplete(phone)) {
+                    showTicketSearchError('Пожалуйста, введите полный номер телефона в формате +7 (XXX) XXX-XX-XX');
+                    return;
+                }
+                searchTicket(phone);
+            });
+        }
+        
+        function showTicketSearchSuccess(ticketNumber, fullName) {
+            ticketSearchResult.innerHTML = `
+                <div class="text-center bg-success p-4 rounded">
+                    <i class="fas fa-check-circle mb-3 text-dark" style="font-size: 3rem;"></i>
+                    <h4 class="mb-3 text-dark">Номер найден!</h4>
+                    <div class="mb-3 bg-white rounded py-3">
+                        <span class="display-4 fw-bold text-dark">${ticketNumber}</span>
+                    </div>
+                    <p class="mb-2 text-dark">${fullName}</p>
+                    <p class="mb-0 text-dark">Это ваш номер для участия в розыгрыше</p>
+                </div>
+            `;
+            ticketSearchResult.style.display = 'block';
+        }
+        
+        function showTicketSearchError(message) {
+            ticketSearchResult.innerHTML = `
+                <div class="alert alert-dark" role="alert">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        <div>
+                            <h5 class="alert-heading mb-1">Внимание</h5>
+                            <p class="mb-0">${message}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            ticketSearchResult.style.display = 'block';
+        }
+
+        function searchTicket(phone) {
+            // Показываем загрузку
+            ticketSearchResult.innerHTML = `
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Загрузка...</span>
+                    </div>
+                    <p class="mt-2">Ищем ваш номер участника...</p>
+                </div>
+            `;
+            ticketSearchResult.style.display = 'block';
+            
+            // Отправляем запрос
+            fetch('/find-ticket', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    'phone': phone
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showTicketSearchSuccess(data.ticket_number, data.full_name);
+                } else {
+                    showTicketSearchError(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                showTicketSearchError('Произошла ошибка при поиске номера. Пожалуйста, попробуйте позже.');
+            });
+        }
+    });
+</script>
+{% endblock %} 

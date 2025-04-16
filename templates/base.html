@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Розыгрыш автомобиля{% endblock %}</title>
+    <meta name="description" content="Розыгрыш PORSCHE CAYENNE для жителей Махачкалы и Каспийска">
+    
+    <!-- Предзагрузка критических ресурсов -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    
+    <!-- Font Awesome с оптимизированной загрузкой -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}?v=5">
+    
+    <!-- Preload car image -->
+    <link rel="preload" href="{{ url_for('static', filename='images/porsche-cayenne.png') }}?v=1" as="image">
+</head>
+<body>
+    <div class="container">
+        <header class="text-center mb-5 py-4">
+            <h1 class="display-4 fw-bold mb-2">Розыгрыш <span class="text-primary">PORSCHE CAYENNE</span></h1>
+            <p class="fs-5 mb-1">от <span class="bg-primary text-white fw-bold px-3 py-1 rounded-pill" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5); letter-spacing: 0.5px;">КАМИЛЯ ВАГИДОВА</span></p>
+            <p class="lead mb-0">Эксклюзивно для жителей Махачкалы (включая все районы) и Каспийска</p>
+            
+            <div class="mt-1 mb-1 text-center">
+                <i class="fas fa-car-side text-primary me-2"></i>
+                <i class="fas fa-trophy text-primary me-2"></i>
+                <i class="fas fa-star text-primary"></i>
+            </div>
+
+            <div class="mt-1 mb-1 text-center">
+                <div class="model-badge text-white px-2 py-1 fw-bold d-inline-block" style="font-size: 2.5rem; letter-spacing: 1px; font-family: 'Impact', sans-serif;">
+                    35-й АВТОМОБИЛЬ
+                </div>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <div class="main-container">
+            {% block content %}{% endblock %}
+        </div>
+
+        <footer class="text-center mb-1 py-2">
+            <p>&copy; 2025 Розыгрыш PORSCHE. Все права защищены. <a href="{{ url_for('admin_panel') }}" class="admin-link" style="color: inherit; font-size: 0.8em; opacity: 0.3; text-decoration: none; margin-left: 5px;">•</a></p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (загрузка с defer) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous" defer></script>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html> 

@@ -1,0 +1,12 @@
+{
+    "whatsapp_link": "https://chat.whatsapp.com/EIa4wkifsVQDttzjOKlOY3",
+    "backup_settings": {
+        "enabled": true,
+        "interval": "custom",
+        "email": "maga22maga44@gmail.com",
+        "last_backup": "2025-04-16 15:05:07",
+        "yandex_token": "y0__xDy1a_hARjblgMguuSn6xJXlhubBW4-LmJ7Gq8ZG8kwV-zyIw",
+        "custom_value": 30,
+        "custom_unit": "seconds"
+    }
+}
